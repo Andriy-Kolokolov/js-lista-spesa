@@ -16,20 +16,20 @@
 	<div class="container mt-5">
 		<form class="row g-3">
 			<div class="col-auto">
-				<label for="log-input" class="visually-hidden"></label>
-				<input type="text" readonly class="text-center form-control-plaintext" id="log-input"
+				<label for="log-field" class="visually-hidden"></label>
+				<input type="text" class="text-center form-control-plaintext" id="log-field"
 						value="---">
 			</div>
 			<div class="col-auto">
-				<label for="input-add-item" class="visually-hidden">Password</label>
-				<input type="password" class="form-control" id="input-add-item"
+				<label for="input-add-item" class="visually-hidden"></label>
+				<input type="text" class="form-control" id="input-add-item"
 						placeholder="Type item name">
 			</div>
 			<div class="col-auto">
-				<button type="submit" class="btn btn-primary mb-3">Add to shopping list</button>
+				<button type="submit" class="btn btn-primary mb-3" id="btn-add">Add to shopping list</button>
 			</div>
 			<div class="col-auto">
-				<button type="submit" class="btn btn-danger mb-3">Remove from list</button>
+				<button type="submit" class="btn btn-danger mb-3" id="btn-remove">Remove from list</button>
 			</div>
 		</form>
 
@@ -41,19 +41,19 @@
 					<th scope="col">Item</th>
 				</tr>
 				</thead>
-				<tbody>
-				<tr>
-					<th scope="row">1</th>
-					<td>Mark</td>
-				</tr>
-				<tr>
-					<th scope="row">2</th>
-					<td>Jacob</td>
-				</tr>
-				<tr>
-					<th scope="row">3</th>
-					<td colspan="2">Larry the Bird</td>
-				</tr>
+				<tbody id="table-shopping-list">
+<!--				<tr>-->
+<!--					<th scope="row">1</th>-->
+<!--					<td>Mark</td>-->
+<!--				</tr>-->
+<!--				<tr>-->
+<!--					<th scope="row">2</th>-->
+<!--					<td>Jacob</td>-->
+<!--				</tr>-->
+<!--				<tr>-->
+<!--					<th scope="row">3</th>-->
+<!--					<td>Larry the Bird</td>-->
+<!--				</tr>-->
 				</tbody>
 			</table>
 		</div>
