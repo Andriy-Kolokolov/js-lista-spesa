@@ -1,52 +1,53 @@
 const tableList = document.getElementById('table-shopping-list');
-const inputAddItem = document.getElementById('input-add-item');
+const inputForm = document.getElementById('input-add-item');
 const logField = document.getElementById('log-field');
 const btnAdd = document.getElementById('btn-add');
 const btnRemove = document.getElementById('btn-remove');
 
 let shoppingList = ["lemons", "beer", "juice", "cola", "bread"];
 
-for (let i = 0; i < shoppingList.length; i++) {
-    console.log(shoppingList.at(i));
-    tableList.innerHTML += `
-        <tr id="item${i + 1}">
-            <th scope="row">${i + 1}</th>
-            <td>${shoppingList.at(i)}</td>
-        </tr>
-        `
-}
+refreshTable(); // print table
 
 btnAdd.addEventListener("click", function (event) {
     event.preventDefault();
-    if (inputAddItem.value.length !== 0) {
-        shoppingList.push(inputAddItem.value);
+    if (inputForm.value.length !== 0 && !shoppingList.includes(inputForm.value)) {
+        shoppingList.push(inputForm.value);
         tableList.innerHTML += `
-        <tr id="item-${inputAddItem.value.replace(/\s/g, '-')}">
+        <tr id="item-${inputForm.value.replace(/\s/g, '-')}">
             <th scope="row">${shoppingList.length}</th>
-            <td>${inputAddItem.value}</td>
+            <td>${inputForm.value}</td>
         </tr>
         `
-        logColor("success");
+        setLogFieldColor("success");
         logField.value = "Item added";
-        inputAddItem.value = "";
+        inputForm.value = "";
+        refreshTable();
     } else {
-        logColor("warning");
-        logField.value = "Input is empty";
+        setLogFieldColor("warning");
+        logField.value = "Empty input or item exists";
     }
 });
 
 btnRemove.addEventListener("click", function (event) {
     event.preventDefault();
-    // remove element from DOM
-    document
-        .getElementById(`item-${inputAddItem.value.replace(/\s/g, '-')}`)
-        .remove();
-    // remove item from list
-    shoppingList.splice(shoppingList.indexOf(inputAddItem.value), 1);
-
+    if (inputForm.value.length !== 0 && shoppingList.includes(inputForm.value)) {
+        // remove element from DOM
+        document
+            .getElementById(`item-${inputForm.value.replace(/\s/g, '-')}`)
+            .remove();
+        // remove item from list
+        shoppingList.splice(shoppingList.indexOf(inputForm.value), 1);
+        setLogFieldColor("success");
+        logField.value = "Item removed";
+        inputForm.value = "";
+        refreshTable();
+    } else {
+        setLogFieldColor("warning");
+        logField.value = "Item not found";
+    }
 });
 
-function logColor(color) {
+function setLogFieldColor(color) {
     switch (color) {
         case "success":
             logField.classList.remove("text-bg-warning");
@@ -56,6 +57,23 @@ function logColor(color) {
             logField.classList.remove("text-bg-success")
             logField.classList.add("text-bg-warning");
             break;
+    }
+}
+
+function refreshTable() {
+    // clear table
+    const eleTable = document.getElementById('table-shopping-list');
+    while (eleTable.firstChild) {
+        eleTable.removeChild(eleTable.lastChild);
+    }
+    // fill table
+    for (let i = 0; i < shoppingList.length; i++) {
+        tableList.innerHTML += `
+        <tr id="item-${shoppingList.at(i).replace(/\s/g, '-')}">
+            <th scope="row">${i + 1}</th>
+            <td>${shoppingList.at(i)}</td>
+        </tr>
+        `
     }
 }
 
