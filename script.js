@@ -17,14 +17,11 @@ btnAdd.addEventListener("click", function (event) {
             <th scope="row">${shoppingList.length}</th>
             <td>${inputForm.value}</td>
         </tr>
-        `
-        setLogFieldColor("success");
-        logField.value = "Item added";
-        inputForm.value = "";
+        `;
+        setLogField("success", "Item added");
         refreshTable();
     } else {
-        setLogFieldColor("warning");
-        logField.value = "Empty input or item exists";
+        setLogField("warning", "Empty input or item exists");
     }
 });
 
@@ -36,18 +33,15 @@ btnRemove.addEventListener("click", function (event) {
             .getElementById(`item-${inputForm.value.replace(/\s/g, '-')}`)
             .remove();
         // remove item from list
-        shoppingList.splice(shoppingList.indexOf(inputForm.value), 1);
-        setLogFieldColor("success");
-        logField.value = "Item removed";
-        inputForm.value = "";
+        removeFromList(shoppingList, inputForm.value);
+        setLogField("success", "Item removed");
         refreshTable();
     } else {
-        setLogFieldColor("warning");
-        logField.value = "Item not found";
+        setLogField("warning", "Item not found");
     }
 });
 
-function setLogFieldColor(color) {
+function setLogField(color, text) {
     switch (color) {
         case "success":
             logField.classList.remove("text-bg-warning");
@@ -58,9 +52,11 @@ function setLogFieldColor(color) {
             logField.classList.add("text-bg-warning");
             break;
     }
+    logField.value = text;
 }
 
 function refreshTable() {
+    inputForm.value = "";
     // clear table
     const eleTable = document.getElementById('table-shopping-list');
     while (eleTable.firstChild) {
@@ -75,6 +71,10 @@ function refreshTable() {
         </tr>
         `
     }
+}
+
+function removeFromList(list, item) {
+    list.splice(list.indexOf(item), 1);
 }
 
 // // soluzione ciclo while
